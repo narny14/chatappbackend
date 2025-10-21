@@ -2,7 +2,10 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import admin from "firebase-admin";
-import serviceAccount from "./firebase-service-account.json" assert { type: "json" };
+import fs from "fs";
+
+// Charger le fichier JSON manuellement
+const serviceAccount = JSON.parse(fs.readFileSync("./firebase-service-account.json", "utf8"));
 
 const app = express();
 app.use(cors());
