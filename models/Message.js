@@ -1,10 +1,13 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+import { DataTypes } from "sequelize";
+import { sequelize } from "./index.js";
+import { User } from "./User.js";
 
-const Message = sequelize.define('Message', {
-  senderId: DataTypes.INTEGER,
-  receiverId: DataTypes.INTEGER,
-  content: DataTypes.STRING,
+export const Message = sequelize.define("Message", {
+  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+  senderId: { type: DataTypes.INTEGER, allowNull: false },
+  receiverId: { type: DataTypes.INTEGER, allowNull: false },
+  content: { type: DataTypes.TEXT, allowNull: false },
 });
 
-module.exports = Message;
+Message.belongsTo(User, { as: "sender", foreignKey: "senderId" });
+Message.belongsTo(User, { as: "receiver", foreignKey: "receiverId" });
